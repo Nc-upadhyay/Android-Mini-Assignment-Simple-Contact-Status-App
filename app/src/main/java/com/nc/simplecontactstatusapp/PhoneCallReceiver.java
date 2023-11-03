@@ -1,12 +1,21 @@
 package com.nc.simplecontactstatusapp;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 public class PhoneCallReceiver extends BroadcastReceiver {
+    SharedPreferences sharedPreferences;
+    Context context;
+
+    public PhoneCallReceiver() {
+
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -17,9 +26,8 @@ public class PhoneCallReceiver extends BroadcastReceiver {
                 if (phoneState.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
                     // Incoming call
                     String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-                    System.out.println(incomingNumber + "  is calling===============");
-                    String message = incomingNumber + " Is try to call you.";
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    if (getToggleStatus())
+                        Toast.makeText(context, getDataFromSp() + " " + incomingNumber, Toast.LENGTH_LONG).show();
                 } else if (phoneState.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
                     // Call answered or outgoing call
                     System.out.println("  is calling===============");
@@ -30,6 +38,16 @@ public class PhoneCallReceiver extends BroadcastReceiver {
                 }
             }
         }
+    }
+
+    String getDataFromSp() {
+        sharedPreferences = MainActivity.cnt.getSharedPreferences(MainActivity.sPFileName, MODE_PRIVATE);
+        return sharedPreferences.getString("status_meg", "Default status");
+    }
+
+    boolean getToggleStatus() {
+        sharedPreferences = MainActivity.cnt.getSharedPreferences(MainActivity.sPFileName, MODE_PRIVATE);
+        return sharedPreferences.getBoolean("status1", false);
     }
 
 }

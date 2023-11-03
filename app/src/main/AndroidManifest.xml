@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".PhoneCallReceiver"
+            android:name="com.nc.simplecontactstatusapp.PhoneCallReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
