@@ -20,16 +20,12 @@ public class PhoneCallReceiver extends BroadcastReceiver {
                     System.out.println(incomingNumber + "  is calling===============");
                     String message = incomingNumber + " Is try to call you.";
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                    // Do something with the incoming call information
                 } else if (phoneState.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
                     // Call answered or outgoing call
-                    // You can do something here as well
-
                     System.out.println("  is calling===============");
 
                 } else if (phoneState.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
                     // Call ended
-                    // You can do something here too
                     System.out.println("  is calling ended===============");
                 }
             }
